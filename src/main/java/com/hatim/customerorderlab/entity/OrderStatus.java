@@ -1,4 +1,9 @@
 package com.hatim.customerorderlab.entity;
 
-public class OrderStatus {
+public enum OrderStatus {
+    CREATED,
+    CONFIRMED,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED
 }
