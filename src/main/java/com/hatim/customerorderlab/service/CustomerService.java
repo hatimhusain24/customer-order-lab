@@ -1,13 +1,14 @@
 package com.hatim.customerorderlab.service;
 
-import com.hatim.customerorderlab.entity.Customer;
+import com.hatim.customerorderlab.dto.CustomerDto;
+import com.hatim.customerorderlab.dto.response.CustomerResponse;
 
 import java.util.List;
 
 public interface CustomerService {
-    Customer createCustomer(Customer customer);
-    Customer getCustomerById(Long id);
-    List<Customer> getAllCustomers();
-    Customer updateCustomer(Long id, Customer customer);
+    CustomerDto createCustomer(CustomerDto customer);
+    CustomerDto getCustomerById(Long id);
+    List<CustomerDto> getAllCustomers();
+    CustomerDto updateCustomer(Long id, CustomerDto customer);
     void deleteCustomer(Long id);
 }
