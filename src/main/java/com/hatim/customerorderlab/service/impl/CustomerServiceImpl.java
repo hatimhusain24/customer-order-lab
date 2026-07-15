@@ -2,6 +2,7 @@ package com.hatim.customerorderlab.service.impl;
 
 import com.hatim.customerorderlab.dto.CustomerDto;
 import com.hatim.customerorderlab.entity.Customer;
+import com.hatim.customerorderlab.exception.ResourceNotFoundException;
 import com.hatim.customerorderlab.mapper.CustomerMapper;
 import com.hatim.customerorderlab.repository.CustomerRepository;
 import com.hatim.customerorderlab.service.CustomerService;
@@ -28,10 +29,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getCustomerById(Long id) {
-        Customer customer = customerRepository.findById(id).orElse(null);
-        if (customer == null){
-            return null;
-        }
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer not found with id " + id));
         return CustomerMapper.toDto(customer);
     }
 
@@ -45,10 +45,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
-        Customer existingCustomer = customerRepository.findById(id).orElse(null);
-        if (existingCustomer == null) {
-            return null;
-        }
+        Customer existingCustomer = customerRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer not found with id " + id));
+
             existingCustomer.setFirstName(customerDto.getFirstName());
             existingCustomer.setLastName(customerDto.getLastName());
             existingCustomer.setEmail(customerDto.getEmail());
@@ -60,6 +60,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
+        Customer customer = customerRepository.findById(id)
+                        .orElseThrow(() ->
+                                new  ResourceNotFoundException("Customer not found with id " + id));
+        customerRepository.delete(customer);
     }
 }

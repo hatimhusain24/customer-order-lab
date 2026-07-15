@@ -1,7 +1,6 @@
 package com.hatim.customerorderlab.service;
 
 import com.hatim.customerorderlab.dto.CustomerDto;
-import com.hatim.customerorderlab.dto.response.CustomerResponse;
 
 import java.util.List;
 
