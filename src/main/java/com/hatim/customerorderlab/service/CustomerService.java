@@ -10,4 +10,5 @@ public interface CustomerService {
     List<CustomerDto> getAllCustomers();
     CustomerDto updateCustomer(Long id, CustomerDto customer);
     void deleteCustomer(Long id);
+    CustomerDto getCustomerByEmail(String email);
 }

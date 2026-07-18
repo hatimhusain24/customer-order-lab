@@ -53,4 +53,9 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/email/{email}")
+    public ResponseEntity<CustomerDto> findbyEmail(@PathVariable String email) {
+        return ResponseEntity.ok(customerService.getCustomerByEmail(email));
+    }
+
 }

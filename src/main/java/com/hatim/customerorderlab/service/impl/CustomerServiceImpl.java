@@ -65,4 +65,12 @@ public class CustomerServiceImpl implements CustomerService {
                                 new  ResourceNotFoundException("Customer not found with id " + id));
         customerRepository.delete(customer);
     }
+
+    @Override
+    public CustomerDto getCustomerByEmail(String email) {
+        Customer customer = customerRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer not found with email " + email));
+        return CustomerMapper.toDto(customer);
+    }
 }
