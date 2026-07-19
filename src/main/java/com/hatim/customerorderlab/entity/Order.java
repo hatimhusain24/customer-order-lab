@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
@@ -23,8 +22,8 @@ public class Order {
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 }
