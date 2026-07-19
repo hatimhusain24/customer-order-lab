@@ -5,6 +5,7 @@ import com.hatim.customerorderlab.service.CustomerService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,19 @@ public class CustomerController {
     @PostMapping("/email/{email}")
     public ResponseEntity<CustomerDto> findbyEmail(@PathVariable String email) {
         return ResponseEntity.ok(customerService.getCustomerByEmail(email));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CustomerDto>> getCustomers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        return ResponseEntity.ok(customerService.getCustomers(page, size));
+    }
+
+    @GetMapping("/sort")
+    public ResponseEntity<List<CustomerDto>> sortCustomers(@RequestParam String field){
+        return ResponseEntity.ok(customerService.sortCustomers(field));
     }
 
 }

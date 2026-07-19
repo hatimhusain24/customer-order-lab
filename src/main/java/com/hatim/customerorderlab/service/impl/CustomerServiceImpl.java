@@ -6,6 +6,10 @@ import com.hatim.customerorderlab.exception.ResourceNotFoundException;
 import com.hatim.customerorderlab.mapper.CustomerMapper;
 import com.hatim.customerorderlab.repository.CustomerRepository;
 import com.hatim.customerorderlab.service.CustomerService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,5 +76,20 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Customer not found with email " + email));
         return CustomerMapper.toDto(customer);
+    }
+
+    @Override
+    public Page<CustomerDto> getCustomers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return customerRepository.findAll(pageable)
+                .map(CustomerMapper::toDto);
+    }
+
+    @Override
+    public List<CustomerDto> sortCustomers(String field) {
+        return customerRepository.findAll(Sort.by(field))
+                .stream()
+                .map(CustomerMapper::toDto)
+                .toList();
     }
 }
